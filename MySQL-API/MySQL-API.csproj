@@ -27,8 +27,4 @@
     <ProjectReference Include="..\MySQL.Services\MySQL.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Mappings\" />
-  </ItemGroup>
-
 </Project>

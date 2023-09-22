@@ -7,11 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Interface\" />
-    <Folder Include="Action\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\MySQL.DataAccess\MySQL.DataAccess.csproj" />
   </ItemGroup>
 
