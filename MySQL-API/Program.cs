@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MySQL.DataAccess.Models;
+using MySQL.Services.Action;
+using MySQL.Services.Interface;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +18,14 @@ builder.Services.AddDbContext<ModelContext>(x =>
         options => options.EnableRetryOnFailure()  // Opciones adicionales según tus necesidades
         )
     );
+
+
+//Inicio de Implementacion de los Servicios para cada uno de los Modelos
+
+builder.Services.AddTransient<iPuestoService, PuestoService>();
+builder.Services.AddTransient<IEstudianteService, EstudianteService>();
+
+//Fin de Implementacion de los Servicios para cada uno de los Modelos
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

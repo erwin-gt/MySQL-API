@@ -8,25 +8,25 @@ namespace MySQL_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EstudianteController : ControllerBase
+    public class PuestoController : ControllerBase
     {
-        private readonly IEstudianteService _servicio;
+        private readonly iPuestoService _servicio;
 
-        public EstudianteController(IEstudianteService servicio)
+        public PuestoController(iPuestoService servicio)
         {
             _servicio = servicio;
         }
 
-        //Lista la informacion de los Estudiantes
+        //Lista la informacion de los puestos
         [HttpGet]
-        public async Task<ActionResult<List<EstudianteDTO>>> Listar()
+        public async Task<ActionResult<List<PuestoDTO>>> Listar()
         {
-            //utilizado por el servicio creadoIEstudianteService
+            //utilizado por el servicio creado IPuestoService
             var retorno = await _servicio.Listar();
 
             //Validacion del Servicio
             if (retorno.Objeto != null)
-                return retorno.Objeto.Select(MapperStudent.ToDTO).ToList();
+                return retorno.Objeto.Select(MapperPuesto.ToDTO).ToList();
             else
                 return StatusCode(retorno.Status, retorno.Error);
         }
