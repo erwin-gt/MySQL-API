@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySQL-API", "MySQL-API\MySQL-API.csproj", "{F68513EF-6C0A-4510-8BE2-EAEF16029F18}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySQL.DataAccess", "MySQL.DataAccess\MySQL.DataAccess.csproj", "{FA1404B4-51F7-4125-B881-F6613927526D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySQL.DTO", "MySQL.DTO\MySQL.DTO.csproj", "{360219F4-A7F2-4ECA-96E2-DC2BA53E5A28}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MySQL.Services", "MySQL.Services\MySQL.Services.csproj", "{08C83CD5-19EC-4C8A-BBEB-670973A4BA24}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F68513EF-6C0A-4510-8BE2-EAEF16029F18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F68513EF-6C0A-4510-8BE2-EAEF16029F18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F68513EF-6C0A-4510-8BE2-EAEF16029F18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F68513EF-6C0A-4510-8BE2-EAEF16029F18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA1404B4-51F7-4125-B881-F6613927526D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA1404B4-51F7-4125-B881-F6613927526D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA1404B4-51F7-4125-B881-F6613927526D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA1404B4-51F7-4125-B881-F6613927526D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{360219F4-A7F2-4ECA-96E2-DC2BA53E5A28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{360219F4-A7F2-4ECA-96E2-DC2BA53E5A28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{360219F4-A7F2-4ECA-96E2-DC2BA53E5A28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{360219F4-A7F2-4ECA-96E2-DC2BA53E5A28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08C83CD5-19EC-4C8A-BBEB-670973A4BA24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08C83CD5-19EC-4C8A-BBEB-670973A4BA24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08C83CD5-19EC-4C8A-BBEB-670973A4BA24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08C83CD5-19EC-4C8A-BBEB-670973A4BA24}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6615E836-6A59-4CE6-B14D-78F275A3134B}
+	EndGlobalSection
+EndGlobal
