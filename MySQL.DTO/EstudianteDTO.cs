@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySQL.DataAccess.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,5 +38,6 @@ namespace MySQL.DTO
         public string? Carnet { get; set; }
 
         public string? Status { get; set; }
+
     }
 }
