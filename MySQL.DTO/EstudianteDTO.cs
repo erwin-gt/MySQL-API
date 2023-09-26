@@ -35,5 +35,7 @@ namespace MySQL.DTO
         public string? CelEncargado { get; set; }
 
         public string? Carnet { get; set; }
+
+        public string? Status { get; set; }
     }
 }

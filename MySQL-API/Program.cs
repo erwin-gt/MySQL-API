@@ -11,7 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
  */
 var cadenaConexion = builder.Configuration.GetConnectionString("mysqlConnection");
 
-builder.Services.AddDbContext<ModelContext>(x =>
+builder.Services.AddDbContext<ProyectoContext>(x =>
     x.UseMySql(
         cadenaConexion,
         ServerVersion.AutoDetect(cadenaConexion),  // Auto-detecta la versión del servidor

@@ -11,9 +11,9 @@ namespace MySQL.Services.Action
 {
     public class EstudianteService : IEstudianteService
     {
-        private ModelContext _context;
+        private ProyectoContext _context;
 
-        public EstudianteService(ModelContext context)
+        public EstudianteService(ProyectoContext context)
         {
             _context = context;
         }

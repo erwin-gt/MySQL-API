@@ -33,5 +33,10 @@ public partial class Estudiante
 
     public string? Carnet { get; set; }
 
+    /// <summary>
+    /// Estado el cual se encuentra, Activo, Inactivo o Pendiente
+    /// </summary>
+    public string Status { get; set; } = null!;
+
     public virtual ICollection<Inscripcion> Inscripcions { get; set; } = new List<Inscripcion>();
 }
