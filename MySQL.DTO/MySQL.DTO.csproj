@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MySQL.DataAccess\MySQL.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
