@@ -29,5 +29,10 @@ public partial class Catedratico
 
     public decimal? Salario { get; set; }
 
+    /// <summary>
+    /// Estado en que se encuentra, Activo o Inactivo
+    /// </summary>
+    public string Estatus { get; set; } = null!;
+
     public virtual ICollection<Curso> IdCursos { get; set; } = new List<Curso>();
 }

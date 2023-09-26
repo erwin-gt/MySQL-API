@@ -30,5 +30,53 @@ namespace MySQL_API.Controllers
             else
                 return StatusCode(retorno.Status, retorno.Error);
         }
+
+        //Lista la informacion de los puestos segun el ID ingresado
+        [HttpGet("{id}")]
+        public async Task<ActionResult<PuestoDTO>> BuscarPorId(int id)
+        {
+            var retorno = await _servicio.BuscarPorId(id);
+            //Validacion del Servicio
+            if (retorno.Objeto != null)
+                return retorno.Objeto.ToDTO();
+            else
+                return StatusCode(retorno.Status, retorno.Error);
+        }
+
+        //Ingreso de datos
+        [HttpPost]
+        public async Task<ActionResult<PuestoDTO>> Guardar(PuestoDTO rol)
+        {
+            var retorno = await _servicio.Guardar(rol.ToDatabase());
+            //Validacion del Servicio
+            if (retorno.Objeto != null)
+                return retorno.Objeto.ToDTO();
+            else
+                return StatusCode(retorno.Status, retorno.Error);
+        }
+
+        //Actualizacion de Datos
+        [HttpPut]
+        public async Task<ActionResult<PuestoDTO>> Actualizar(PuestoDTO rol)
+        {
+            var retorno = await _servicio.Actualizar(rol.ToDatabase());
+            //Validacion del Servicio
+            if (retorno.Objeto != null)
+                return retorno.Objeto.ToDTO();
+            else
+                return StatusCode(retorno.Status, retorno.Error);
+        }
+
+        //Eliminacion de Puesto segun ID ingresado
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> Elimiar(int id)
+        {
+            var retorno = await _servicio.Eliminar(id);
+            //Validacion del Servicio
+            if (retorno.Exito)
+                return true;
+            else
+                return StatusCode(retorno.Status, retorno.Error);
+        }
     }
 }

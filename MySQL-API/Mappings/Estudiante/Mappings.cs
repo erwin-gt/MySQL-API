@@ -22,6 +22,7 @@ namespace MySQL_API.Mappings
                 NomEncargado = model.NomEncargado,
                 CelEncargado = model.CelEncargado,
                 Carnet = model.Carnet,
+                Status = model.Status,
 
             };
         }
@@ -46,6 +47,7 @@ namespace MySQL_API.Mappings
                 NomEncargado = dto.NomEncargado,
                 CelEncargado = dto.CelEncargado,
                 Carnet = dto.Carnet,
+                Status= dto.Status,
             };
         }
     }

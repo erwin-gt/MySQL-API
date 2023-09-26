@@ -11,9 +11,9 @@ namespace MySQL.Services.Action
 {
     public class PuestoService: iPuestoService
     {
-        private ModelContext _context;
+        private ProyectoContext _context;
 
-        public PuestoService(ModelContext context)
+        public PuestoService(ProyectoContext context)
         {
             _context = context;
         }
@@ -43,19 +43,62 @@ namespace MySQL.Services.Action
             return resp;
         }
 
-        public Task<RespuestaServicio<Puesto>> BuscarPorId(int id)
+        public async Task<RespuestaServicio<Puesto>> BuscarPorId(int id)
         {
-            throw new NotImplementedException();
+            var resp = new RespuestaServicio<Puesto>();
+            var pst = await _context.Puestos.FirstOrDefaultAsync(x =>x.IdRol == id);
+
+            //Valida la existencia del Puesto
+            if (pst == null)
+                resp.AgregarBadRequest("ID ingresado no existe");
+            else
+                resp.Objeto = pst;
+            return resp;
         }
 
-        public Task<RespuestaServicio<bool>> Eliminar(int id)
+        public async Task<RespuestaServicio<bool>> Eliminar(int id)
         {
-            throw new NotImplementedException();
+            var resp = new RespuestaServicio<bool>();
+            var pst = await _context.Puestos.FirstOrDefaultAsync(x => x.IdRol == id);
+
+            if (pst == null)
+                resp.AgregarBadRequest("ID ingresado no existe");
+            else
+            {
+                try
+                {
+                    _context.Puestos.Remove(pst);
+                    await _context.SaveChangesAsync() ;
+                    resp.Exito = true;
+                }
+
+                catch(DbUpdateException ex)
+                {
+                    resp.AgregarInternalServerError(ex.Message);
+                }
+            }
+
+            return resp;
+
         }
 
-        public Task<RespuestaServicio<Puesto>> Guardar(Puesto puesto)
+        public async Task<RespuestaServicio<Puesto>> Guardar(Puesto puesto)
         {
-            throw new NotImplementedException();
+            var resp = new RespuestaServicio<Puesto>();
+
+            try
+            {
+                await _context.Puestos.AddAsync(puesto);
+                await _context.SaveChangesAsync();
+                puesto.IdRol = await _context.Puestos.MaxAsync(rol => rol.IdRol);
+                resp.Objeto = puesto;
+            }
+            catch(DbUpdateException ex)
+            {
+                resp.AgregarInternalServerError(ex.Message);
+            }
+
+            return resp;
         }
 
         public async Task<RespuestaServicio<List<Puesto>>> Listar()

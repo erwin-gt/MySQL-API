@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MySQL.DataAccess.Models;
 
-public partial class ModelContext : DbContext
+public partial class ProyectoContext : DbContext
 {
-    public ModelContext()
+    public ProyectoContext()
     {
     }
 
-    public ModelContext(DbContextOptions<ModelContext> options)
+    public ProyectoContext(DbContextOptions<ProyectoContext> options)
         : base(options)
     {
     }
@@ -38,11 +38,9 @@ public partial class ModelContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseMySql("server=localhost;port=3030;database=proyecto;user=erwin;password=123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.1.0-mysql"));
 
-    { 
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-   //     => optionsBuilder.UseMySql("server=localhost;port=3030;database=proyecto;user=erwin;password=123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.1.0-mysql"));
-    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder
@@ -125,6 +123,9 @@ public partial class ModelContext : DbContext
             entity.Property(e => e.Direccion)
                 .HasMaxLength(250)
                 .HasColumnName("direccion");
+            entity.Property(e => e.Estatus)
+                .HasMaxLength(15)
+                .HasComment("Estado en que se encuentra, Activo o Inactivo");
             entity.Property(e => e.FContratacion).HasColumnName("fContratacion");
             entity.Property(e => e.FNacimiento).HasColumnName("fNacimiento");
             entity.Property(e => e.PApellido)
@@ -177,7 +178,7 @@ public partial class ModelContext : DbContext
         {
             entity.HasKey(e => e.IdCurso).HasName("PRIMARY");
 
-            entity.ToTable("Curso");
+            entity.ToTable("Curso", tb => tb.HasComment("Cursos Creados"));
 
             entity.HasIndex(e => e.IdGrado, "idGrado");
 
@@ -196,6 +197,9 @@ public partial class ModelContext : DbContext
             entity.Property(e => e.Seccion)
                 .HasMaxLength(1)
                 .HasColumnName("seccion");
+            entity.Property(e => e.Status)
+                .HasMaxLength(10)
+                .HasComment("Estado el cual se encuentra, Activo, Inactivo o Pendiente");
 
             entity.HasOne(d => d.IdGradoNavigation).WithMany(p => p.Cursos)
                 .HasForeignKey(d => d.IdGrado)
@@ -263,6 +267,10 @@ public partial class ModelContext : DbContext
             entity.Property(e => e.SNombre)
                 .HasMaxLength(50)
                 .HasColumnName("sNombre");
+            entity.Property(e => e.Status)
+                .HasMaxLength(10)
+                .HasDefaultValueSql("'Pendiente'")
+                .HasComment("Estado el cual se encuentra, Activo, Inactivo o Pendiente");
             entity.Property(e => e.TNombre)
                 .HasMaxLength(50)
                 .HasColumnName("tNombre");
