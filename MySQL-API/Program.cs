@@ -25,6 +25,7 @@ builder.Services.AddDbContext<ProyectoContext>(x =>
 builder.Services.AddTransient<iPuestoService, PuestoService>();
 builder.Services.AddTransient<IEstudianteService, EstudianteService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
+builder.Services.AddTransient<ICarreraService, CarreraService>();
 
 //Fin de Implementacion de los Servicios para cada uno de los Modelos
 
