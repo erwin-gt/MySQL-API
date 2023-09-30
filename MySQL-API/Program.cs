@@ -26,6 +26,9 @@ builder.Services.AddTransient<iPuestoService, PuestoService>();
 builder.Services.AddTransient<IEstudianteService, EstudianteService>();
 builder.Services.AddTransient<IAdminService, AdminService>();
 builder.Services.AddTransient<ICarreraService, CarreraService>();
+builder.Services.AddTransient<IInscripcionService, InscripcionService>();
+builder.Services.AddTransient<ICursoService, CursoService>();
+builder.Services.AddTransient<INotaService, NoteService>();
 
 //Fin de Implementacion de los Servicios para cada uno de los Modelos
 

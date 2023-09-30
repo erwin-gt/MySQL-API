@@ -6,10 +6,6 @@ namespace MySQL.DataAccess.Models;
 public partial class Inscripcion
 {
     public int IdInscripcion { get; set; }
-
-    /// <summary>
-    ///  Fecha de la Inscripcion
-    /// </summary>
     public DateOnly FIncripcion { get; set; }
 
     public int? IdCarrera { get; set; }
