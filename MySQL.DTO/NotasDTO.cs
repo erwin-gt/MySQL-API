@@ -17,3 +17,5 @@ namespace MySQL.DTO
         public int? IdCurso { get; set; }
     }
 }
+
+

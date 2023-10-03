@@ -16,3 +16,4 @@ namespace MySQL.Services.Interface
         Task<RespuestaServicio<bool>> Eliminar(int id);
     }
 }
+
