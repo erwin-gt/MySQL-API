@@ -291,7 +291,7 @@ public partial class ProyectoContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(250)
                 .HasColumnName("descripcion");
-            entity.Property(e => e.Grado1)
+            entity.Property(e => e.GradoN)
                 .HasMaxLength(150)
                 .HasColumnName("grado");
             entity.Property(e => e.IdCarrera).HasColumnName("idCarrera");
