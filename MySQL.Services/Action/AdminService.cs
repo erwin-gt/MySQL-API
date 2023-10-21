@@ -24,7 +24,7 @@ namespace MySQL.Services.Action
             var adm = await _context.Administracions.FirstOrDefaultAsync(x => x.IdAdmin == admin.IdAdmin);
 
             if (adm == null)
-                resp.AgregarBadRequest("ID de Estudiante no registrado");
+                resp.AgregarBadRequest("ID de Administracion no registrado");
             else
                 adm.PNombre = admin.PNombre;
                 adm.SNombre = admin.SNombre;

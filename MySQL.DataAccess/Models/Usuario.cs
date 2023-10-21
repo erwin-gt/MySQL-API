@@ -11,8 +11,8 @@ public partial class Usuario
 
     public string? Correo { get; set; }
 
-    /// <summary>
-    /// Fecha Cracion del Usuario
-    /// </summary>
+    public string? TipoUsuario { get; set; }
     public DateOnly? FCreacion { get; set; }
+
+    public string? Clave { get; set; }
 }

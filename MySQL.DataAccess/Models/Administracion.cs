@@ -11,16 +11,25 @@ public partial class Administracion
 
     public string SNombre { get; set; } = null!;
 
+    /// <summary>
+    /// Tercer Nombre si existiese
+    /// </summary>
     public string? TNombre { get; set; }
 
     public string PApellido { get; set; } = null!;
 
     public string SApellido { get; set; } = null!;
 
+    /// <summary>
+    /// Fecha de Nacimiento
+    /// </summary>
     public DateOnly FNacimiento { get; set; }
 
     public int Telefono { get; set; }
 
+    /// <summary>
+    /// Fecha de Contratacion
+    /// </summary>
     public DateOnly FContratacion { get; set; }
 
     public string Direccion { get; set; } = null!;

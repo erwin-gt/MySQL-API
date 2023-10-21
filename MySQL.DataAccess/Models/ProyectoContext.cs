@@ -38,8 +38,14 @@ public partial class ProyectoContext : DbContext
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+    {
+        /*
+         #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
         => optionsBuilder.UseMySql("server=localhost;port=3030;database=proyecto;user=erwin;password=123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.1.0-mysql"));
+         */
+
+    }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -207,21 +213,21 @@ public partial class ProyectoContext : DbContext
 
             entity.HasMany(d => d.IdCatedraticos).WithMany(p => p.IdCursos)
                 .UsingEntity<Dictionary<string, object>>(
-                    "CursoCatedrativo",
+                    "CursoCatedratico",
                     r => r.HasOne<Catedratico>().WithMany()
                         .HasForeignKey("IdCatedratico")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("CursoCatedrativo_ibfk_2"),
+                        .HasConstraintName("CursoCatedratico_ibfk_2"),
                     l => l.HasOne<Curso>().WithMany()
                         .HasForeignKey("IdCurso")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("CursoCatedrativo_ibfk_1"),
+                        .HasConstraintName("CursoCatedratico_ibfk_1"),
                     j =>
                     {
                         j.HasKey("IdCurso", "IdCatedratico")
                             .HasName("PRIMARY")
                             .HasAnnotation("MySql:IndexPrefixLength", new[] { 0, 0 });
-                        j.ToTable("CursoCatedrativo");
+                        j.ToTable("CursoCatedratico");
                         j.HasIndex(new[] { "IdCatedratico" }, "idCatedratico");
                         j.HasIndex(new[] { "IdCurso", "IdCatedratico" }, "idCurso");
                         j.IndexerProperty<int>("IdCurso").HasColumnName("idCurso");
@@ -250,7 +256,6 @@ public partial class ProyectoContext : DbContext
             entity.Property(e => e.Direccion)
                 .HasMaxLength(100)
                 .HasColumnName("direccion");
-            entity.Property(e => e.FContratacion).HasColumnName("fContratacion");
             entity.Property(e => e.FNacimiento).HasColumnName("fNacimiento");
             entity.Property(e => e.NomEncargado)
                 .HasMaxLength(100)
@@ -327,7 +332,7 @@ public partial class ProyectoContext : DbContext
 
             entity.HasOne(d => d.IdCarreraNavigation).WithMany(p => p.Inscripcions)
                 .HasForeignKey(d => d.IdCarrera)
-                .HasConstraintName("Inscripcion_ibfk_1");
+                .HasConstraintName("idCarrera_fk");
 
             entity.HasOne(d => d.IdEstudianteNavigation).WithMany(p => p.Inscripcions)
                 .HasForeignKey(d => d.IdEstudiante)
@@ -339,6 +344,8 @@ public partial class ProyectoContext : DbContext
             entity.HasKey(e => e.IdNota).HasName("PRIMARY");
 
             entity.HasIndex(e => e.IdCurso, "idCurso");
+
+            entity.HasIndex(e => e.IdNota, "idNota");
 
             entity.Property(e => e.IdNota).HasColumnName("idNota");
             entity.Property(e => e.Descripcion)
@@ -374,6 +381,10 @@ public partial class ProyectoContext : DbContext
             entity.ToTable("Usuario");
 
             entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.Clave)
+                .HasMaxLength(25)
+                .HasDefaultValueSql("'secund'")
+                .HasColumnName("clave");
             entity.Property(e => e.Correo)
                 .HasMaxLength(100)
                 .HasColumnName("correo");
