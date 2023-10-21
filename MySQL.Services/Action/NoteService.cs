@@ -24,7 +24,7 @@ namespace MySQL.Services.Action
             var note = await _context.Nota.FirstOrDefaultAsync(x => x.IdNota == nt.IdNota);
 
             if (note == null)
-                resp.AgregarBadRequest("ID de Carrera no registrado");
+                resp.AgregarBadRequest("ID de Nota no registrado");
             else
                 note.Nota = nt.Nota;
                 note.Descripcion = nt.Descripcion;

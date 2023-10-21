@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MySQL.DTO;
 using MySQL.Services.Interface;
@@ -7,6 +8,7 @@ using MySQL_API.Mappings;
 namespace MySQL_API.Controllers
 {
     [Route("api/[controller]")]
+   
     [ApiController]
     public class EstudianteController : ControllerBase
     {

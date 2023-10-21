@@ -25,8 +25,6 @@ namespace MySQL.DTO
 
         public string? Telefono { get; set; }
 
-        public DateOnly? FContratacion { get; set; }
-
         public string? Direccion { get; set; }
 
         public string? CElectronico { get; set; }

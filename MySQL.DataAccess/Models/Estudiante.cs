@@ -21,8 +21,6 @@ public partial class Estudiante
 
     public string? Telefono { get; set; }
 
-    public DateOnly? FContratacion { get; set; }
-
     public string? Direccion { get; set; }
 
     public string? CElectronico { get; set; }
@@ -33,7 +31,8 @@ public partial class Estudiante
 
     public string? Carnet { get; set; }
 
-    public string? Status { get; set; }
+   
+    public string Status { get; set; } = null!;
 
-    public virtual ICollection<Inscripcion>? Inscripcions { get; set; }
+    public virtual ICollection<Inscripcion> Inscripcions { get; set; } = new List<Inscripcion>();
 }
