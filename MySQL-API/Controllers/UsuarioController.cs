@@ -27,56 +27,6 @@ namespace MySQL_API.Controllers
         }
 
 
-        /*
-        private readonly ProyectoContext _context;
-        public IConfiguration _configuration;
-
-        public UsuarioController(IUsuarioService servicio, ProyectoContext context, IConfiguration configuration)
-        {
-            _servicio = servicio;
-            _context = context;
-            _configuration = configuration;
-        }
-        */
-
-        /*
-        public UsuarioController(IUsuarioService servicio)
-        {
-            _servicio = servicio;
-        }
-        
-
-
-        public dynamic IniciarSesion([FromBody] Object optData)
-        {
-            var data = JsonConvert.DeserializeObject<dynamic>(optData.ToString());
-
-            string user = data.usuario.ToString();
-            string clave = data.pass.ToString();
-
-            Usuario usuario = _context.Usuarios.Where(x => x.Usuario1 == user && x.Clave == clave).FirstOrDefault();   
-
-            if(usuario == null)
-            {
-                return new
-                {
-                    success = false,
-                    message = "Credenciales Incorrectas",
-                    result = ""
-                };
-            }
-
-            var jwt = _configuration.GetSection("settings").GetSection("secretkey");
-
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, jwt.()),
-
-            }
-        }
-
-        */
-
         //Autenticacion del Usuario
 
         [HttpPost]
@@ -87,6 +37,28 @@ namespace MySQL_API.Controllers
             if(resultadoAutorizacion == null)
                 return Unauthorized();
             return Ok(resultadoAutorizacion);
+        }
+
+        [HttpPost]
+        [Route("ObtenerRefreshToken")]
+        public async Task<IActionResult> ObtenerRefreshToken([FromBody] RefreshTokenRequest request)
+        {
+            var tokenHadler = new JwtSecurityTokenHandler();
+            var tokenExpirado = tokenHadler.ReadJwtToken(request.TokenExpirado);
+
+            if (tokenExpirado.ValidTo > DateTime.UtcNow)
+                return BadRequest(new AutorizacionResponse { Resultado = false, Mensaje = "Token no ha Expirado" });
+
+            string idUsuario = tokenExpirado.Claims.First(x =>
+            x.Type == JwtRegisteredClaimNames.NameId).Value.ToString();
+
+            var autorizacionResponse = await _autorizacionService.DevolverRefreshToken(request, int.Parse(idUsuario));
+
+            if (autorizacionResponse.Resultado)
+                return Ok(autorizacionResponse);
+            else
+                return BadRequest(autorizacionResponse);
+
         }
 
 

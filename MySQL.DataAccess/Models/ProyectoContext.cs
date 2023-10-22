@@ -29,6 +29,8 @@ public partial class ProyectoContext : DbContext
 
     public virtual DbSet<Grado> Grados { get; set; }
 
+    public virtual DbSet<HitorialRefreshToken> HitorialRefreshTokens { get; set; }
+
     public virtual DbSet<Inscripcion> Inscripcions { get; set; }
 
     public virtual DbSet<Notum> Nota { get; set; }
@@ -37,14 +39,7 @@ public partial class ProyectoContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        /*
-         #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseMySql("server=localhost;port=3030;database=proyecto;user=erwin;password=123", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.1.0-mysql"));
-         */
-
-    }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -241,9 +236,7 @@ public partial class ProyectoContext : DbContext
 
             entity.ToTable("Estudiante");
 
-            entity.Property(e => e.IdEstudiante)
-                .ValueGeneratedNever()
-                .HasColumnName("idEstudiante");
+            entity.Property(e => e.IdEstudiante).HasColumnName("idEstudiante");
             entity.Property(e => e.CElectronico)
                 .HasMaxLength(100)
                 .HasColumnName("cElectronico");
@@ -306,6 +299,34 @@ public partial class ProyectoContext : DbContext
                 .HasConstraintName("Grado_ibfk_1");
         });
 
+        modelBuilder.Entity<HitorialRefreshToken>(entity =>
+        {
+            entity.HasKey(e => e.IdHistorial).HasName("PRIMARY");
+
+            entity.ToTable("HitorialRefreshToken");
+
+            entity.HasIndex(e => e.IdUsuario, "idUsuario");
+
+            entity.Property(e => e.IdHistorial).HasColumnName("idHistorial");
+            entity.Property(e => e.FechaCreacion)
+                .HasColumnType("timestamp")
+                .HasColumnName("fechaCreacion");
+            entity.Property(e => e.FechaExpiracion)
+                .HasColumnType("timestamp")
+                .HasColumnName("fechaExpiracion");
+            entity.Property(e => e.IdUsuario).HasColumnName("idUsuario");
+            entity.Property(e => e.RefreshToken)
+                .HasMaxLength(200)
+                .HasColumnName("refreshToken");
+            entity.Property(e => e.Token)
+                .HasMaxLength(300)
+                .HasColumnName("token");
+
+            entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.HitorialRefreshTokens)
+                .HasForeignKey(d => d.IdUsuario)
+                .HasConstraintName("idUsuario_FK");
+        });
+
         modelBuilder.Entity<Inscripcion>(entity =>
         {
             entity.HasKey(e => e.IdInscripcion).HasName("PRIMARY");
@@ -336,7 +357,7 @@ public partial class ProyectoContext : DbContext
 
             entity.HasOne(d => d.IdEstudianteNavigation).WithMany(p => p.Inscripcions)
                 .HasForeignKey(d => d.IdEstudiante)
-                .HasConstraintName("Inscripcion_ibfk_2");
+                .HasConstraintName("idEstudiante");
         });
 
         modelBuilder.Entity<Notum>(entity =>
@@ -391,6 +412,9 @@ public partial class ProyectoContext : DbContext
             entity.Property(e => e.FCreacion)
                 .HasComment("Fecha Cracion del Usuario")
                 .HasColumnName("fCreacion");
+            entity.Property(e => e.TipoUsuario)
+                .HasMaxLength(15)
+                .HasColumnName("tipoUsuario");
             entity.Property(e => e.Usuario1)
                 .HasMaxLength(60)
                 .HasColumnName("usuario");
