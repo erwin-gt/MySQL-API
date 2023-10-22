@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography;
 
 namespace MySQL.Services.Action
 {
@@ -53,6 +54,39 @@ namespace MySQL.Services.Action
             string tokenCreado = tokenHandler.WriteToken(tokenConfig);
 
             return tokenCreado;
+
+        }
+
+
+        private string GenerarRefreshToken()
+        {
+            var byteArray = new byte[64];
+            var refreshToken = "";
+
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(byteArray);
+                refreshToken = Convert.ToBase64String(byteArray);
+            }
+            return refreshToken;
+        }
+
+
+        private async Task<AutorizacionResponse>GuardarHistorialRefreshToken(int idUsuario, string token, string refreshToken)
+        {
+            var historialRefreshToken = new HitorialRefreshToken
+            {
+                IdUsuario = idUsuario,
+                Token = token,
+                RefreshToken = refreshToken,
+                FechaCreacion = DateTime.UtcNow,
+                FechaExpiracion = DateTime.UtcNow.AddHours(8)
+            };
+
+            await _context.HitorialRefreshTokens.AddAsync(historialRefreshToken);
+            await _context.SaveChangesAsync();
+
+            return new AutorizacionResponse() { Token = token, RefreshToken = refreshToken, Resultado = true, Mensaje = "OK" };
         }
 
 
@@ -66,13 +100,32 @@ namespace MySQL.Services.Action
             }
 
             string tokenCreado = GenerarToken(coincide.IdUsuario.ToString());
-            return new AutorizacionResponse()
+            string refreshTokenCreado = GenerarRefreshToken();
+            /*return new AutorizacionResponse()
             {
                 Token = tokenCreado,
                 Resultado = true,
                 Mensaje = "OK"
-            };
+            };*/
 
+            return await GuardarHistorialRefreshToken(coincide.IdUsuario, tokenCreado, refreshTokenCreado);
+
+        }
+
+        public async Task<AutorizacionResponse> DevolverRefreshToken(RefreshTokenRequest refreshTokenRequest, int idUsuario)
+        {
+            var refreshTokenEncontrado = _context.HitorialRefreshTokens.FirstOrDefault(x => 
+            x.Token == refreshTokenRequest.TokenExpirado &&
+            x.RefreshToken == refreshTokenRequest.RefreshToken &&
+            x.IdUsuario == idUsuario);
+
+            if (refreshTokenEncontrado == null)
+                return new AutorizacionResponse { Resultado = false, Mensaje = "No existe refreshToken" };
+
+            var refreshTokenCreado = GenerarRefreshToken();
+            var tokenCreado = GenerarToken(idUsuario.ToString());
+
+            return await GuardarHistorialRefreshToken(idUsuario, tokenCreado, refreshTokenCreado);
         }
     }
 }
